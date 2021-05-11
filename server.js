@@ -29,7 +29,33 @@ io.on("connection",socket=>{
         cb(messages[roomName])
         socket.emit("joined", messages[roomName]);
     });
-    socket.on("send message")
+    socket.on("send message",({content,to,sender,chatName, isChannel})=>{
+        if(isChannel){
+            const payload = {
+                content,
+                chatName,
+                sender
+            };
+            socket.to(to).emit("new message",payload);
+        }else{
+            const payload = {
+                content,
+                chatName: sender,
+                sender
+            }
+            socket.to(to).emit("new message",payload);
+        }
+        if(messages[chatName]) {
+            messages[chatName].push({
+                sender,
+                content
+            });
+        }
+    })
+    socket.on("disconnect",()=>{
+        users = users.filter(u => u.id !== socket.id);
+        io.emit("new user",users)
+    });
 });
 
 server.listen(3000,()=> console.log(`running on port 3000`))
