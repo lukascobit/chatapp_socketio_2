@@ -1,4 +1,4 @@
-import React,[ useState, useRef, useEffect] from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import immer from 'immer';
 import io from 'socket.io-client'
@@ -13,11 +13,11 @@ function App() {
   const [allUsers,setAllUsers] = useState([]);
   const [messages,setMessages] = setState(initialMessagesState);
   const [message,setMessage] = useState("");
-  const socketRef = useRef()
+  const socketRef = useRef();
 
   return (
     <div className="App">
-        
+        <h1></h1>
     </div>
   );
 }
